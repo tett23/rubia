@@ -1,0 +1,35 @@
+-#coding: utf-8
+
+!!! 5
+%html
+  %head
+    %meta{charset: 'utf-8'}
+    %meta{:name=>'viewport', :content=>'width=device-width',:'initial-scale'=>'1.0'}
+    -if PADRINO_ENV == :production
+      =stylesheet_link_tag 'bootstrap', 'bootstrap-responsive'
+    -else
+      =stylesheet_link_tag 'bootstrap.min', 'bootstrap-responsive.min'
+    =stylesheet_link_tag 'common'
+    =javascript_include_tag 'jquery', 'jquery-ujs'
+    -if PADRINO_ENV == :production
+      =javascript_include_tag 'bootstrap.min'
+    -else
+      =javascript_include_tag 'bootstrap'
+    =javascript_include_tag 'application'
+  %body
+    .navbar.navbar-inverse.navbar-fixed-top.topbar
+      .navbar-inner
+        .container-fluid
+          %a.btn.btn-navbar{:'data-toggle'=>'collapse', :'data-target'=>'.nav-collapse'}
+            %span.icon-bar
+          %a.brand{:href=>'/'} freesia
+          =partial 'layouts/header_menu'
+    #wrap.container-fluid
+      -if logged_in?
+        .row-fluid
+          .span9
+            !=breadcrumbs
+            =yield
+      -else
+        .row-fluid
+          =yield
