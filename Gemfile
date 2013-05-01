@@ -43,6 +43,8 @@ gem 'padrino', '0.11.1'
 gem 'padrino-helpers'
 gem 'padrino-mailer'
 
+gem 'git'
+
 # Or Individual Gems
 # %w(core gen helpers cache mailer admin).each do |g|
 #   gem 'padrino-' + g, '0.11.1'

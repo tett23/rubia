@@ -1,0 +1,15 @@
+-# coding: utf-8
+
+%h2=@work.title
+
+%h3 logs
+
+-if @repos.repos.log.size.zero?
+  コミットがない
+-else
+  -@repos.repos.log.each do |log|
+    %li="##{log.author_date} #{log.author.name}: #{log.message} (#{log})"
+
+%h3 本文
+
+!=@repos.to_html
