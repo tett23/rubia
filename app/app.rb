@@ -23,6 +23,12 @@ module Rubia
       role.allow '/sessions'
     end
 
+    before do
+      if logged_in?
+        add_breadcrumbs('rubia', url('/'))
+      end
+    end
+
     ##
     # Caching support
     #
@@ -63,16 +69,13 @@ module Rubia
     #   end
     #
 
-    ##
-    # You can manage errors like:
-    #
-    #   error 404 do
-    #     render 'errors/404'
-    #   end
-    #
-    #   error 505 do
-    #     render 'errors/505'
-    #   end
-    #
+    error 404 do
+      render 'errors/404'
+    end
+
+    error 505 do
+      render 'errors/505'
+    end
+
   end
 end

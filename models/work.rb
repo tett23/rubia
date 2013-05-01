@@ -7,8 +7,15 @@ class Work
   property :title, String
   property :slug, Slug
 
-  def self.list
-    self.all
+  belongs_to :account
+
+  def self.list(account_id, options={})
+    default = {
+      account_id: account_id
+    }
+    options = default.merge(options)
+
+    self.all(options)
   end
 
   def self.detail(slug)
