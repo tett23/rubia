@@ -4,8 +4,24 @@ module Rubia
     register Padrino::Rendering
     register Padrino::Mailer
     register Padrino::Helpers
+    register Padrino::Admin::AccessControl
+    register Rubia::OmniauthInitializer
 
+    enable :authentication
+    enable :store_location
     enable :sessions
+
+    set :login_page, '/sessions/login'
+
+    access_control.roles_for :any do |role|
+      role.protect '/'
+      role.allow '/sessions'
+      role.allow '/auth'
+    end
+
+    access_control.roles_for :users do |role|
+      role.allow '/sessions'
+    end
 
     ##
     # Caching support
