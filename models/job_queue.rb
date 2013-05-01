@@ -16,6 +16,8 @@ class JobQueue
   belongs_to :work, required: false
 
   def process
+    self.update(is_running: true)
+
     case self.type
     when :build_epub
       in_path = [Rubia::REPOS_DIR, self.work.slug].join('/')
