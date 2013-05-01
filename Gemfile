@@ -45,6 +45,8 @@ gem 'padrino-mailer'
 
 gem 'git'
 
+gem 'rubia-epubgen', git: 'git@github.com:tett23/rubia-epubgen.git'
+
 # Or Individual Gems
 # %w(core gen helpers cache mailer admin).each do |g|
 #   gem 'padrino-' + g, '0.11.1'

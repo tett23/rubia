@@ -1,4 +1,6 @@
 module Rubia
+  ARCHIVE_DIR = [PADRINO_ROOT, 'archives'].join('/')
+
   class App < Padrino::Application
     register SassInitializer
     register Padrino::Rendering
