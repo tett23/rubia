@@ -19,6 +19,9 @@ Rubia::App.controllers :works do
   end
 
   get :new, map: '/works/new' do
+    add_breadcrumbs(current_account.screen_name, url(:accounts, :show, screen_name: current_account.screen_name))
+    add_breadcrumbs('新規作品作成', url(:works, :new))
+
     render :'works/new'
   end
 
@@ -32,6 +35,8 @@ Rubia::App.controllers :works do
       redirect url(:works, :show, screen_name: @work.account.screen_name, slug: @work.slug)
     else
       flash[:error] = @work.errors.to_html
+      add_breadcrumbs(current_account.screen_name, url(:accounts, :show, screen_name: current_account.screen_name))
+      add_breadcrumbs('新規作品作成', url(:works, :new))
 
       render :'works/new'
     end
