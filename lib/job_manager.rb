@@ -43,22 +43,29 @@ module Rubia
       return nil if queue_item.nil?
 
       queue_item.update(is_running: true)
-      log = JobLog.create(job: queue_item.job)
-      queue_item.job.update(log: log)
+      append_log(queue_item.job)
 
-      if queue_item.job.process
-        begin
-          eval(queue_item.callback) unless queue_item.callback.blank?
-        rescue
-          error_message = [$!.message, $!.backtrace.join("\n")].join("\n")
-          error_message = [queue_item.log.body.to_s, error_message].join("\n")
-
-          log.update(body: error_message)
-        end
-      end
-      log.update(finish_at: Time.now)
+      execute_callback(queue_item) if queue_item.job.process
+      queue_item.job.log.update(finish_at: Time.now)
 
       queue_item.destroy
+    end
+
+    private
+    def self.append_log(job)
+      log = JobLog.create(job: job)
+      job.update(log: log)
+    end
+
+    def self.execute_callback(queue)
+      begin
+        eval(queue.callback) unless queue.callback.blank?
+      rescue
+        error_message = [$!.message, $!.backtrace.join("\n")].join("\n")
+        error_message = [queue.job.log.body.to_s, error_message].join("\n")
+
+        queue.job.log.update(body: error_message)
+      end
     end
   end
 end
