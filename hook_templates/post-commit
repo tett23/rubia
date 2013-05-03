@@ -1,0 +1,36 @@
+#! /usr/bin/env ruby
+
+require 'rubygems' unless defined?(Gem)
+require 'bundler/setup'
+Bundler.require
+
+pwd = Dir.pwd
+SLUG = pwd[pwd.rindex('/')+1..-1]
+RUBIA_DIR = pwd.gsub(/(.+rubia)\/.+/, '\1')
+PADRINO_ROOT = RUBIA_DIR
+
+libs = [
+  'lib', 'models'
+]
+
+DataMapper.logger = Logger.new('/dev/null')
+DataMapper::Property::String.length(255)
+DataMapper.setup(:default, 'mysql://tett23:password@localhost/rubia_development')
+
+def load_libs(libs)
+  libs.each do |item|
+    require_path = [RUBIA_DIR, item].join("/")
+    if File.directory?(require_path)
+      Dir[require_path+'/*.rb'].each do |lib|
+        require lib
+      end
+    else
+      require require_path
+    end
+  end
+end
+load_libs(libs)
+DataMapper.finalize
+
+work = Work.detail(SLUG)
+Rubia::JobManager.push(:build_epub, work) unless work.nil?
