@@ -2,16 +2,6 @@
 
 =partial :'works/header', locals: {work: @work}
 
-%h3 logs
-
--if @repos.repos.log.size.zero?
-  コミットがない
--else
-  -@repos.repos.log.each do |log|
-    %li="##{log.author_date} #{log.author.name}: #{log.message} (#{log})"
-
-!=button_link 'download', url(:archives, :download, screen_name: params[:screen_name], slug: params[:slug], filename: params[:slug]+'.zip'), icon: 'download-alt'
-
 %h3 本文
 
 !=@repos.to_html

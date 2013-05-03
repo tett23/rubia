@@ -1,0 +1,9 @@
+-# coding: utf-8
+
+%div.navbar
+  %div.navbar-inner
+    %h2=link_to work.slug, url(:works, :show, screen_name: work.account.screen_name, slug: work.slug), class: 'brand'
+    %ul.nav
+      %li=link_to 'home', url(:works, :show, screen_name: work.account.screen_name, slug: work.slug)
+      %li=link_to 'logs', url(:logs, :index, screen_name: work.account.screen_name, slug: work.slug)
+      %li=link_to 'download', url(:archives, :download, screen_name: params[:screen_name], slug: params[:slug], filename: params[:slug]+'.zip')
