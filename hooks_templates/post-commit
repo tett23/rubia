@@ -8,6 +8,7 @@ pwd = Dir.pwd
 SLUG = pwd[pwd.rindex('/')+1..-1]
 RUBIA_DIR = pwd.gsub(/(.+rubia)\/.+/, '\1')
 PADRINO_ROOT = RUBIA_DIR
+BRANCH = `git branch --no-color 2> /dev/null`[/^\* (.+)/, 1].to_s
 
 libs = [
   'lib', 'models'
@@ -33,4 +34,7 @@ load_libs(libs)
 DataMapper.finalize
 
 work = Work.detail(SLUG)
-Rubia::JobManager.push(:build_epub, work) unless work.nil?
+data = {
+  branch: BRANCH
+}
+Rubia::JobManager.push(:build_epub, work, data: data) unless work.nil?

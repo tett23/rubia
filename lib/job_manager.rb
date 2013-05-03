@@ -6,12 +6,14 @@ module Rubia
 
     def self.push(type, target, options={})
       defalut = {
-        callback: nil
+        callback: nil,
+        data: nil
       }
       options = defalut.merge(options)
       job = {}
       raise 'invalid job type' if TYPES.index(type).nil?
       job[:type] = type
+      job[:data] = options[:data]
 
       case type
       when :build_epub

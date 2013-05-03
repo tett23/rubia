@@ -6,6 +6,7 @@ class Job
   property :id, Serial
   property :type, Enum[*Rubia::JobManager::TYPES], required: true
   property :status, Enum[:unexecuted, :in_progress, :failure, :success], default: :unexecuted
+  property :data, Json
   property :created_at, DateTime
   property :updated_at, DateTime
 
