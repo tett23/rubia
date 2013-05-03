@@ -28,6 +28,7 @@ Rubia::App.controllers :works do
     @work = Work.new(work)
 
     if @work.save
+      Rubia::Repos.get(@work.slug)
       redirect url(:works, :show, screen_name: @work.account.screen_name, slug: @work.slug)
     else
       flash[:error] = @work.errors.to_html
