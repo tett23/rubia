@@ -23,11 +23,19 @@ module Rubia
     end
 
     def self.last
-      JobQueue.last
+      JobQueue.all(order: :priority).last
     end
 
     def self.first
-      JobQueue.first
+      JobQueue.all(order: :priority).first
+    end
+
+    def self.[](*args)
+      JobQueue.all(order: :priority)[*args]
+    end
+
+    def self.at(index)
+      JobQueue.all(order: :priority)[index]
     end
 
     def self.process_first
