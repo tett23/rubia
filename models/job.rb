@@ -6,7 +6,9 @@ class Job
   property :id, Serial
   property :type, Enum[*Rubia::JobManager::TYPES], required: true
   property :status, Enum[:unexecuted, :in_progress, :failure, :success], default: :unexecuted
-  property :data, Json
+  property :data, Json, default: {
+    branch: 'master'
+  }
   property :created_at, DateTime
   property :updated_at, DateTime
 
@@ -25,8 +27,13 @@ class Job
         out_dir = [Rubia::ARCHIVE_DIR, self.work.account.screen_name].join('/')
         FileUtils.mkdir_p(out_dir) unless Dir.exists?(out_dir)
 
+        repo = Rubia::Repos.get(self.work.slug)
+        repo.repos.branch(self.data['branch']).checkout
+
         book = Rubia::Epubgen::Book.new(self.work.slug, in_path)
         book.to_epub(out_path)
+
+        repo.repos.checkout('master')
       end
 
       self.update(status: :success)
