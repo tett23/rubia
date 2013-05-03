@@ -1,0 +1,11 @@
+-# coding: utf-8
+
+%fieldset
+  %legend 作品
+  %label 名前
+  =f.text_field :title
+  %label 識別子
+  =f.text_field :slug
+  %hr
+  =f.submit '作成', :class => 'btn btn-primary'
+  !=button_link 'キャンセル', url('/')

@@ -25,6 +25,7 @@
           %a.brand{:href=>'/'} rubia
           =partial 'layouts/header_menu'
     #wrap.container-fluid
+      =partial :'layouts/infomations'
       -if logged_in?
         .row-fluid
           .span9

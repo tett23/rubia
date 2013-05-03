@@ -78,7 +78,19 @@ module Rubia
     end
 
     def self.create(create_path)
-      Git.init(create_path)
+      repository_templates = [PADRINO_ROOT, 'repository_templates'].join('/')
+      hooks_templates = [PADRINO_ROOT, 'hooks_templates'].join('/')
+      hooks_dir = [create_path, '.git/hooks'].join('/')
+
+      FileUtils.copy_entry(repository_templates, create_path)
+      git = Git.init(create_path)
+      FileUtils.rm_rf(hooks_dir)
+      File.symlink(hooks_templates, hooks_dir)
+
+      git.add
+      git.config('user.name', 'rubia')
+      git.config('user.email', 'rubia@donuthole.org')
+      git.commit('initial commit')
 
       open(create_path)
     end
