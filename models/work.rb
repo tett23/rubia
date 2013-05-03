@@ -9,7 +9,11 @@ class Work
 
   belongs_to :account
 
+  validates_length_of :title, within: 1..50, message: '名前は50字以内で指定してください'
   validates_with_method :check_unique_slug
+  validates_length_of :slug, within: 1..20, message: '識別子は20字以内で指定してください'
+  validates_format_of :slug, with: /^[A-Za-z0-9\-]+$/, message: '識別子に使える文字は半角英数字とハイフンのみです'
+
 
   def self.list(account_id, options={})
     default = {
