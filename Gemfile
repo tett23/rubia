@@ -44,6 +44,7 @@ gem 'padrino-helpers'
 gem 'padrino-mailer'
 
 gem 'git'
+gem 'rroonga'
 
 gem 'rubia-epubgen', git: 'git@github.com:tett23/rubia-epubgen.git'
 
