@@ -1,0 +1,35 @@
+-# coding: utf-8
+
+:sass
+  .box
+    margin-bottom: 20px
+    .line.highlight
+      background-color: #edd
+    .line
+      margin: 0
+      padding: 0
+      margin: 0.1em 0
+      .line_number
+        float: left
+        background-color: #eee
+        border-right: 1px solid #666
+      .line_body
+        p
+          margin: 0
+
+-result.each do |r|
+  .box
+    -lines = r.body.lines.to_a
+    -match_index = lines.index do |line|
+      -!line.match(query).nil?
+    -next if match_index.nil?
+    -(match_index-2..match_index+2).each do |line_index|
+      -line_body = lines[line_index]
+      -is_match = line_body.match(query)
+      -line_class = 'line clearfix'
+      -line_class += ' highlight' if is_match
+      %div{class: line_class}
+        %span.line_number
+          =line_index+1
+        %span.line_body
+          !=RedCloth.new(lines[line_index]).to_html

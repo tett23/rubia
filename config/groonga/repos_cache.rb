@@ -4,6 +4,7 @@ Groonga::Schema.define do |schema|
   schema.create_table('ContentBody',
     type: :hash
   ) do |t|
+    t.text('commit_hash')
     t.text('body')
   end
 

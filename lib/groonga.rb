@@ -30,15 +30,23 @@ module Rubia
       extend self
 
       def add(hash, body)
-        content_body = ::Groonga['ContentBody'].add(hash)
+        groonga_key = Digest::MD5.hexdigest(body+Time.now.to_i.to_s+rand().to_s)
+        content_body = ::Groonga['ContentBody'].add(groonga_key)
         content_body.body = body
+        content_body.commit_hash = hash
 
         content_body
       end
 
-      def find(query)
-        ::Groonga['ContentBody'].select do
-          |r| r.body =~ query
+      def find(query, commit_hash=nil)
+        hash = ::Groonga['ContentBody']
+        hash.select do |r|
+          unless commit_hash.blank?
+            r.commit_hash =~ commit_hash
+            r.body =~ query
+          else
+            r.body =~ query
+          end
         end
       end
     end

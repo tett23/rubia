@@ -1,0 +1,9 @@
+-# coding: utf-8
+
+=partial :'works/header', locals: {work: @work}
+
+-form_for :'work', url(:work_search, :index, screen_name: params[:screen_name], slug: params[:slug]), method: :post do |f|
+  =partial :'work_search/form', locals: {f: f}
+
+-if @result
+  =partial :'work_search/list', locals: {result: @result, query: @query}

@@ -1,0 +1,19 @@
+-# coding: utf-8
+
+%fieldset
+  %legend 検索
+  %label クエリ
+  =f.text_field :query, value: ((params[:work][:query] || nil) rescue '')
+
+  .accordion#search
+    .accordion-group
+      .accordion-heading
+        %a{:class=>'accordion-toggle', :'data-toggle'=>'collapse', :'data-parent'=>'#search', :href=>'#detail'}
+          詳細
+      #detail.accordion-body.collapse
+        .accordion-inner
+          %label 識別子
+          =f.text_field :slug, value: (params[:work][:slug] rescue @slug)
+  %hr
+  =f.submit '検索', :class => 'btn btn-primary'
+  !=button_link 'キャンセル', url('/')

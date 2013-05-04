@@ -43,6 +43,8 @@ Padrino.after_load do
   DataMapper.finalize
 
   FileUtils.mkdir(Rubia::REPOS_DIR) unless Dir.exists?(Rubia::REPOS_DIR)
+
+  Rubia::Groonga.open
 end
 
 Padrino.load!

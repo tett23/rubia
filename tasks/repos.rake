@@ -36,7 +36,7 @@ namespace :repos do
           data[:filename] = filename
 
           content_body = Rubia::Groonga::ReposCache.add(cache[:commit_hash], text)
-          data[:groonga_key] = content_body.hash
+          data[:groonga_key] = content_body.key
 
           if ReposCache.first(commit_hash: data[:commit_hash], filename: data[:filename]).nil?
             ReposCache.create(data)

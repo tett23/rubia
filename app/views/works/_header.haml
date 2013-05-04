@@ -7,3 +7,4 @@
       %li=link_to 'home', url(:works, :show, screen_name: work.account.screen_name, slug: work.slug)
       %li=link_to 'logs', url(:logs, :index, screen_name: work.account.screen_name, slug: work.slug)
       %li=link_to 'download', url(:archives, :download, screen_name: params[:screen_name], slug: params[:slug], filename: params[:slug]+'.zip')
+      %li=link_to 'search', url(:work_search, :index, screen_name: params[:screen_name], slug: params[:slug])
