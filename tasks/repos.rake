@@ -20,6 +20,7 @@ namespace :repos do
           commit_hash: commit.sha,
           commit_at: commit.date,
           commit_message: commit.message,
+          branch_name: branch.name,
           work_id: work.id
         }
 

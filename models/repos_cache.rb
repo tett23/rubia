@@ -7,6 +7,7 @@ class ReposCache
   property :commit_hash, String
   property :commit_at, DateTime
   property :commit_message, Text
+  property :branch_name, String
   property :groonga_key, String
   property :filename, String
   property :created_at, DateTime
